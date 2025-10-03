@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith - Exoplanet Predictor</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: rgb(16, 16, 34);
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 30px;
+        }
+
+        .app-title {
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-shadow: 0px 0px 10px rgba(0, 255, 200, 0.6);
+        }
+
+        .upload-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            border-radius: 12px;
+            width: 50%;
+            margin: 0 auto 40px auto;
+            box-shadow: 0px 0px 15px rgba(0, 255, 200, 0.2);
+        }
+
+        .planet-gallery {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .planet-card {
+            width: 220px;
+            text-align: center;
+        }
+
+        .planet-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0px 0px 20px rgba(0, 200, 255, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .planet-card img:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 0px 30px rgba(0, 200, 255, 0.7);
+        }
+
+        .planet-name {
+            margin-top: 10px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.5);
+        }
+
+        .btn-custom {
+            background-color: #00d4ff;
+            color: black;
+            font-weight: bold;
+            border-radius: 8px;
+            padding: 10px 20px;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: #00a3c4;
+            transform: scale(1.05);
+        }
+
+
+        .bpFab {
+            width: 85px !important;
+            height: 85px !important;
+            bottom: 30px !important;
+            right: 30px !important;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.6) !important;
+            border-radius: 50% !important;
+        }
+
+        .bpFabIcon {
+            font-size: 40px !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-title">Zenith</div>
+
+    <!-- CSV Upload Section -->
+    <div class="upload-box">
+        <h4>Upload Exoplanet Dataset (CSV)</h4>
+        <form action="/results" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".csv" class="form-control mb-3" required>
+            <button type="submit" class="btn btn-custom">Predict</button>
+        </form>
+    </div>
+    <div class="planet-gallery">
+        <div class="planet-card">
+            <img src="{{ url_for('static', filename='images/kepler22b.png') }}" alt="Planet">
+            <div class="planet-name">Kepler-22b</div>
+        </div>
+        <div class="planet-card">
+            <img src="{{ url_for('static', filename='images/kepler186f.png') }}" alt="Planet">
+            <div class="planet-name">Kepler-186f</div>
+        </div>
+        <div class="planet-card">
+            <img src="{{ url_for('static', filename='images/kepler452b.png') }}" alt="Planet">
+            <div class="planet-name">Kepler-452b</div>
+        </div>
+        <div class="planet-card">
+            <img src="{{ url_for('static', filename='images/proxima_b.png') }}" alt="Planet">
+            <div class="planet-name">Proxima-b</div>
+        </div>
+    </div>
+
+    <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js"></script>
+    <script>
+      window.botpress.on("webchat:ready", () => {
+        window.botpress.open();
+      });
+
+      window.botpress.init({
+        "botId": "f0210df9-42e9-4bef-a9b0-a6b62bdf2147",
+        "configuration": {
+          "version": "v2",
+          "botName": "Stella",
+          "botAvatar": "https://files.bpcontent.cloud/2025/10/02/18/20251002184115-RHWF9XP1.jpeg",
+          "botDescription": "Your conversational guide to exoplanets",
+          "color": "#168f0b",
+          "variant": "solid",
+          "headerVariant": "solid",
+          "themeMode": "light",
+          "fontFamily": "ADLaM Display",
+          "radius": 3.5,
+          "feedbackEnabled": false,
+          "allowFileUpload": false,
+          "soundEnabled": false,
+          "proactiveMessageEnabled": false
+        },
+        "clientId": "1a749aca-60e4-4929-8a2b-83de96de3e23"
+      });
+    </script>
+
+</body>
+</html>

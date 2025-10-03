@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Prediction Dashboard</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+body {
+    --tw-bg-opacity: 1;
+    background-color: rgb(16 16 34 / var(--tw-bg-opacity));
+    color: #f0f0f0;
+}
+.card {
+    margin-bottom: 30px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    background-color: #1e1e3f;
+    color: #ffffff;
+}
+.card-title {
+    text-align: center;
+    font-weight: bold;
+}
+.chart-img {
+    width: 100%;
+    height: auto;
+}
+.table-container {
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 400px;
+    margin-bottom: 40px;
+}
+table.table th, table.table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 0.5rem;
+    color: #ffffff;
+    background-color: #1e1e3f;
+}
+table.table thead th {
+    background-color: #2e2e5f;
+    color: #ffffff;
+}
+.btn-primary {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+}
+h4 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+</style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Exoplanet Prediction Dashboard</h1>
+
+    <!-- Charts in grid -->
+    <div class="row">
+        {% if bar_chart %}
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Predicted Class Distribution</h5>
+                    <img src="{{ url_for('static', filename=bar_chart) }}" class="chart-img">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if pie_chart %}
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Predicted Class Pie Chart</h5>
+                    <img src="{{ url_for('static', filename=pie_chart) }}" class="chart-img">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if line_chart %}
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Planet Radius Trend</h5>
+                    <img src="{{ url_for('static', filename=line_chart) }}" class="chart-img">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if scatter_chart %}
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Planet Radius vs Incident Flux</h5>
+                    <img src="{{ url_for('static', filename=scatter_chart) }}" class="chart-img">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if box_chart %}
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Stellar Temperature per Class</h5>
+                    <img src="{{ url_for('static', filename=box_chart) }}" class="chart-img">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if actual_vs_pred_chart %}
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Actual vs Predicted Disposition</h5>
+                    <img src="{{ url_for('static', filename=actual_vs_pred_chart) }}" class="chart-img">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <h4>Feature Descriptions</h4>
+    <table class="table table-bordered table-dark">
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>Full Form / Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for feature, fullform in feature_fullforms.items() %}
+            <tr>
+                <td>{{ feature }}</td>
+                <td>{{ fullform }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Prediction Table -->
+    <h4>Prediction Table</h4>
+    <div class="table-container">
+        {{ prediction_table|safe }}
+    </div>
+
+    <div class="text-center">
+        <a href="/" class="btn btn-primary mt-3">Upload Another File</a>
+    </div>
+</div>
+</body>
+</html>

@@ -167,40 +167,6 @@ def results():
     else:
         chart_files['box_chart'] = None
 
-    # ---------- Actual vs Predicted Chart ----------
-    if 'koi_disposition' in df.columns:
-        try:
-            # Map actual labels to numbers safely (drop unknowns)
-            y_true_mapped = df['koi_disposition'].map(reverse_label_map)
-            # If mapping produced NaNs (unknown labels), replace with -1
-            y_true = y_true_mapped.fillna(-1).astype(int)
-            y_pred = preds
-            # We need to ensure confusion matrix input labels are valid (exclude -1 rows)
-            valid_idx = y_true != -1
-            if valid_idx.sum() > 0:
-                cm = confusion_matrix(y_true[valid_idx], y_pred[valid_idx], labels=[0, 1, 2])
-            else:
-                cm = np.zeros((3, 3), dtype=int)
-
-            classes = ['False Positive', 'Candidate', 'Confirmed']
-            actual_vs_pred_file = os.path.join(app.config['STATIC_FOLDER'], 'actual_vs_pred.png')
-            plt.figure(figsize=(6, 5), facecolor=DARK_BG_HEX)
-            sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=classes, yticklabels=classes,
-                        cbar=False, annot_kws={"color": "white"})
-            plt.xlabel('Predicted', color='white')
-            plt.ylabel('Actual', color='white')
-            plt.title('Actual vs Predicted Disposition', color='white')
-            plt.xticks(color='white')
-            plt.yticks(color='white')
-            plt.tight_layout()
-            plt.savefig(actual_vs_pred_file, bbox_inches='tight', facecolor=DARK_BG_HEX)
-            plt.close()
-            chart_files['actual_vs_pred_chart'] = 'actual_vs_pred.png'
-        except Exception as e:
-            chart_files['actual_vs_pred_chart'] = None
-    else:
-        chart_files['actual_vs_pred_chart'] = None
-
     # --- Display important columns and features ---
     display_cols = []
     if 'kepid' in df.columns:
